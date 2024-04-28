@@ -2,9 +2,9 @@
 
 class View {
 constructor() {
-    this.month = document.getElementById("todayLabel");
+    this.todayLabel = document.getElementById("todayLabel");
 }
     render(value) {
-        this.month.innerText = value;
+        this.todayLabel.innerText = value;
     }
 }
