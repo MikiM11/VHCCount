@@ -7,7 +7,7 @@ class Controller {
     }
 
     startRender() {
-        this.view.render(this.model.todayLabel);
+        this.view.render(this.model.getData);
     }
 }
 

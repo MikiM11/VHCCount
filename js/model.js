@@ -1,26 +1,36 @@
 "use strict";
 
 class Model {
+    constructor() {
+        //data předávaná controlleru
+        this.data = []    
+    }
 
-    get todayLabel() {
+    get getData() { //připravuje a předává data do controlleru
         this.dateString = new CalendarCalculator();
         return this.dateString.todayLabel;
-        
     }
 }
 
 class CalendarCalculator {
     constructor (){
-        this.calCalc = new Date();
-        this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(this.calCalc);
+        this.calDate = new Date(); //dnešní datum
+        this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(this.calDate);//dnešní den
         
     }
 
     get todayLabel() {
-        return this.weekDay + " " + this.calCalc.toLocaleDateString();
+        return this.weekDay + " " + this.calDate.toLocaleDateString(); //formát dnešního dne
     }
 }
 
-const url = "https://script.google.com/macros/s/AKfycbxk9eEdN1dija4QZaSXM8MQPZgYFdCrm14_gpDbojNiHf7gYPCMeN1_qQDoG6xs1jX1OA/exec"
-
-fetch(url);
+rawData = [
+        [ 'ID', 'DAY', 'MONTH', 'YEAR', 'OFFER', 'USER' ],
+        [ 1715152478221, 8, 5, 2024, 'Y', 'Miki' ],
+        [ 1715152531897, 8, 5, 2024, 'N', 'Miki' ],
+        [ 1715152628994, 8, 5, 2024, 'Y', 'Miki' ],
+        [ 
+        [ 'MONTH', 'YEAR', 'GOAL' ],
+        [ 5, 2024, 18 ],
+        [ 6, 2024, 18 ]
+        ]];
