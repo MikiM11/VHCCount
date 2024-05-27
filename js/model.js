@@ -34,3 +34,5 @@ const rawData = [
 [ 1715152629456, 8, 5, 2024, 'N', 'Jirka' ] ],
 [ [ 'MONTH', 'YEAR', 'GOAL' ], [ 5, 2024, 18 ], [ 6, 2024, 18 ] ] 
 ];
+
+console.log(rawData);
