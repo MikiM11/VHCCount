@@ -35,4 +35,5 @@ const rawData = [
 [ [ 'MONTH', 'YEAR', 'GOAL' ], [ 5, 2024, 18 ], [ 6, 2024, 18 ] ] 
 ];
 
-console.log(rawData);
+const filterData = rawData.map(arr => arr.filter(arr1 => arr1[2] == 5));
+console.log(filterData);
