@@ -15,18 +15,18 @@ class Model {
   }
 }
 
+//třída která pracuje s kalendářem
 class CalendarCalculator {
   constructor() {
     this.calDate = new Date(); //dnešní datum
     this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(
       this.calDate
-    ); //dnešní den
+    ); //dnešní den čekém formátu
     this.date = this.calDate.getDate();
     //this.month = this.calDate.getMonth();
     this.month = this.calDate.getMonth();
     this.year = this.calDate.getFullYear();
   }
-
   //formátované dnešní datum
   get todayLabel() {
     return this.weekDay + " " + this.calDate.toLocaleDateString();
