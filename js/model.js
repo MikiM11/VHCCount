@@ -15,15 +15,44 @@ class Model {
   }
 }
 
-//třída která pracuje s kalendářem
+
+//načítá a zpracovává data z uložiště
+class LoadData {
+  constructor() {
+    this.rawData[
+      [
+        ["ID", "DAY", "MONTH", "YEAR", "OFFER", "USER"],
+        [1715152478221, 8, 5, 2024, "Y", "Miki"],
+        [1715152531897, 8, 5, 2024, "N", "Miki"],
+        [1715152628994, 8, 5, 2024, "Y", "Miki"],
+        [1715152629456, 8, 5, 2024, "N", "Jirka"],
+        [1717246409143, 1, 6, 2024, "Y", "Miki"],
+        [1717246425616, 1, 6, 2024, "Y", "Jirka"],
+        [1717246425616, 1, 6, 2024, "Y", "Miki"],
+        [1717246502222, 1, 6, 2024, "Y", "Jirka"],
+        [1717246515464, 1, 6, 2024, "Y", "Miki"],
+        [1717246527213, 1, 6, 2024, "N", "Jirka"],
+        [1717246549559, 1, 6, 2024, "N", "Miki"],
+        [1717246560293, 1, 6, 2024, "N", "Jirka"],
+        [1717246575869, 1, 6, 2024, "N", "Miki"],
+        [1717246589742, 1, 6, 2024, "N", "Jirka"],
+      ],
+      [
+        ["MONTH", "YEAR", "GOAL"],
+        [5, 2024, 18],
+        [6, 2024, 18],
+      ],
+    ]; //FIXME:
+  }
+}
+
+//třída pracující s kalendářem
 class CalendarCalculator {
   constructor() {
     this.calDate = new Date(); //dnešní datum
-    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(
-      this.calDate
-    ); //dnešní den čekém formátu
+    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(this.calDate); //dnešní den v českém formátu
+    this.timeStamp = Date.now();
     this.date = this.calDate.getDate();
-    //this.month = this.calDate.getMonth();
     this.month = this.calDate.getMonth();
     this.year = this.calDate.getFullYear();
   }
@@ -81,4 +110,6 @@ const rawData = [
 const filterData = rawData.map((arr) => arr.filter((arr1) => arr1[2] == 6));
 console.log(filterData);
 const obj = new Model();
+const cal = new CalendarCalculator();
+console.log(cal.timeStamp);
 console.log(obj.getData);
