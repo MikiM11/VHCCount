@@ -1,85 +1,64 @@
 <!DOCTYPE html>
 <html lang="cs">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="img/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="img/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="img/favicon/favicon-16x16.png"
-    />
-    <link
-      rel="shortcut icon"
-      type="image/png"
-      href="img/favicon/favicon-16x16.png"
-    />
-    <link rel="manifest" href="img/favicon/site.webmanifest" />
-    <title>VHC - počet</title>
-  </head>
 
-  <body class="container">
-    <div class="row mt-3 mb-3">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png" />
+  <link rel="shortcut icon" type="image/png" href="img/favicon/favicon-16x16.png" />
+  <link rel="manifest" href="img/favicon/site.webmanifest" />
+  <title>VHC - počet</title>
+</head>
+
+<body class="container">
+  <div class="row mt-3 mb-3">
+    <div class="col">
+      <h4>Spočítej to... VHC</h4>
+    </div>
+    <div class="col">
+      <img src="img/logo.jpeg" alt="Logo Ford" width="100" class="float-end" />
+    </div>
+  </div>
+  <hr />
+  <div class="m-1" id="todayLabel"></div>
+  <div class="container border rounded p-3">
+    <div class="row"><span id="month" class="h5"></span></div>
+    <div class="row">
       <div class="col">
-        <h4>Spočítej to... VHC</h4>
+        <div class="h6"><span>Cíl</span></div>
+        <div class="h1" id="montCount">0</div>
       </div>
       <div class="col">
-        <img
-          src="img/logo.jpeg"
-          alt="Logo Ford"
-          width="100"
-          class="float-end"
-        />
-      </div>
-    </div>
-    <hr />
-    <div class="m-1" id="todayLabel"></div>
-    <div class="container border rounded p-3">
-        <div class="row"><span id="month" class="h5"></span></div>
-        <div class="row">
-        <div class="col">
-          <div class="h6"><span>Cíl</span></div>
-          <div class="h1" id="montCount">0</div>
-        </div>
-        <div class="col">
-          <div class="h6">Odeslaná VHC</div>
-          <div class="h1">0</div>
-          <div>
-            <button type="button" class="btn btn-success" title="s nabídkou">
-              0 <i class="bi bi-clipboard-check pe-1"></i>
-            </button>
-            <button type="button" class="btn btn-warning" title="bez nabídky">
-              0 <i class="bi bi-clipboard pe-1"></i>
-            </button>
-          </div>
-        </div>
-        <div class="col">
-          <div class="h6"><span>Zbývá</span></div>
-          <div class="h1">0</div>
+        <div class="h6">Odeslaná VHC</div>
+        <div class="h1">0</div>
+        <div>
+          <button type="button" class="btn btn-success" title="s nabídkou">
+            0 <i class="bi bi-clipboard-check pe-1"></i>
+          </button>
+          <button type="button" class="btn btn-warning" title="bez nabídky">
+            0 <i class="bi bi-clipboard pe-1"></i>
+          </button>
         </div>
       </div>
-    </div>
-    <div class="align-self-end">
-      <div class="text-center fw-lighter p-0 m-0">
-        <small>v0.3 miki©2024</small>
+      <div class="col">
+        <div class="h6"><span>Zbývá</span></div>
+        <div class="h1">0</div>
       </div>
     </div>
+  </div>
+  <div class="align-self-end">
+    <div class="text-center fw-lighter p-0 m-0">
+      <small>v0.3 miki©2024</small>
+    </div>
+  </div>
 
-    <script src="js/model.js"></script>
-    <script src="js/view.js"></script>
-    <script src="js/controller.js"></script>
-  </body>
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+</body>
+
 </html>

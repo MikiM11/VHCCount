@@ -15,11 +15,10 @@ class Model {
   }
 }
 
-
 //načítá a zpracovává data z uložiště
 class LoadData {
   constructor() {
-    this.rawData[
+    this.rawData = [
       [
         ["ID", "DAY", "MONTH", "YEAR", "OFFER", "USER"],
         [1715152478221, 8, 5, 2024, "Y", "Miki"],
@@ -42,7 +41,7 @@ class LoadData {
         [5, 2024, 18],
         [6, 2024, 18],
       ],
-    ]; //FIXME:
+    ];
   }
 }
 
