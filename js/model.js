@@ -35,11 +35,20 @@ class LoadData {
         [1717246560293, 1, 6, 2024, "N", "Jirka"],
         [1717246575869, 1, 6, 2024, "N", "Miki"],
         [1717246589742, 1, 6, 2024, "N", "Jirka"],
+        [1721750861144, 23, 7, 2024, "Y", "Miki"],
+        [1721751051000, 23, 7, 2024, "N", "Miki"],
+        [1721752668000, 23, 7, 2024, "Y", "Jirka"],
+        [1721752724000, 23, 7, 2024, "N", "Jirka"],
+        [1721752766000, 23, 7, 2024, "Y", "Miki"],
+        [1721752873935, 23, 7, 2024, "N", "Miki"],
       ],
       [
         ["MONTH", "YEAR", "GOAL"],
         [5, 2024, 18],
         [6, 2024, 18],
+        [7, 2024, 17],
+        [8, 2024, 18],
+        [9, 2024, 19],
       ],
     ];
   }
@@ -49,7 +58,9 @@ class LoadData {
 class CalendarCalculator {
   constructor() {
     this.calDate = new Date(); //dnešní datum
-    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(this.calDate); //dnešní den v českém formátu
+    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(
+      this.calDate
+    ); //dnešní den v českém formátu
     this.timeStamp = Date.now();
     this.date = this.calDate.getDate();
     this.month = this.calDate.getMonth();
@@ -97,16 +108,25 @@ const rawData = [
     [1717246560293, 1, 6, 2024, "N", "Jirka"],
     [1717246575869, 1, 6, 2024, "N", "Miki"],
     [1717246589742, 1, 6, 2024, "N", "Jirka"],
+    [1721750861144, 23, 7, 2024, "Y", "Miki"],
+    [1721751051000, 23, 7, 2024, "N", "Miki"],
+    [1721752668000, 23, 7, 2024, "Y", "Jirka"],
+    [1721752724000, 23, 7, 2024, "N", "Jirka"],
+    [1721752766000, 23, 7, 2024, "Y", "Miki"],
+    [1721752873935, 23, 7, 2024, "N", "Miki"],
   ],
   [
     ["MONTH", "YEAR", "GOAL"],
     [5, 2024, 18],
     [6, 2024, 18],
+    [7, 2024, 17],
+    [8, 2024, 18],
+    [9, 2024, 19],
   ],
 ];
 
 //ladící informace
-const filterData = rawData.map((arr) => arr.filter((arr1) => arr1[2] == 6));
+const filterData = rawData.map((arr) => arr.filter((arr1) => arr1[2] == 7));
 console.log(filterData);
 const obj = new Model();
 const cal = new CalendarCalculator();
