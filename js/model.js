@@ -16,7 +16,7 @@ class Model {
 }
 
 //načítá a zpracovává data z uložiště
-class LoadData {
+class DataStorage {
   constructor() {
     this.rawData = [
       [
@@ -51,6 +51,11 @@ class LoadData {
         [9, 2024, 19],
       ],
     ];
+  }
+
+  getGoal(month) {
+    this.filterData = this.rawData.map((arr)=> arr.filter((arr1) => arr1[2] === month));
+    return this.filterData.length();
   }
 }
 
