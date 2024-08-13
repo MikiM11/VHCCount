@@ -55,7 +55,7 @@ class DataStorage {
 
   getGoal(month) {
     this.filterData = this.rawData.map((arr)=> arr.filter((arr1) => arr1[2] === month));
-    return this.filterData.length();
+    return this.filterData.length;
   }
 }
 
