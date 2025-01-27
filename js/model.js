@@ -7,7 +7,7 @@ class Model {
   }
 
   get getData() {
-    //připravuje a předává data do controlleru
+    //připravuje a předává data do controlleru pro zobrazení
     this.dateString = new CalendarCalculator();
     this.data.dateString = this.dateString.todayLabel;
     this.data.monthString = this.dateString.monthName;
@@ -54,7 +54,7 @@ class DataStorage {
   }
 
   getGoal(month) {
-    this.filterData = this.rawData.map((arr)=> arr.filter((arr1) => arr1[2] === month));
+    this.filterData = this.rawData.map((arr) => arr.filter((arr1) => arr1[2] === month));
     return this.filterData.length;
   }
 }
@@ -63,35 +63,16 @@ class DataStorage {
 class CalendarCalculator {
   constructor() {
     this.calDate = new Date(); //dnešní datum
-    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(
-      this.calDate
-    ); //dnešní den v českém formátu
-    this.timeStamp = Date.now();
-    this.date = this.calDate.getDate();
-    this.month = this.calDate.getMonth();
-    this.year = this.calDate.getFullYear();
+    this.timeStamp = Date.now(); //časová značka
+    this.date = this.calDate.getDate(); //dnešní datum
+    this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(this.calDate); //dnešní den v českém formátu
+    this.monthName = new Intl.DateTimeFormat("cz-CZ", { month: "long" }).format(this.calDate);//aktuální název měsíce v textovém formátu
+    this.month = this.calDate.getMonth(); //aktuální měsíc - číslo
+    this.year = this.calDate.getFullYear(); //aktuální rok
   }
   //formátované dnešní datum
   get todayLabel() {
     return this.weekDay + " " + this.calDate.toLocaleDateString();
-  }
-  //textový název měsíce
-  get monthName() {
-    this.monthNames = [
-      "Leden",
-      "Únor",
-      "Březen",
-      "Duben",
-      "Květen",
-      "Červen",
-      "Červenec",
-      "Srpen",
-      "Září",
-      "Říjen",
-      "Listopad",
-      "Prosinec",
-    ];
-    return this.monthNames[this.month];
   }
 }
 
@@ -133,6 +114,7 @@ const rawData = [
 //ladící informace
 const filterData = rawData.map((arr) => arr.filter((arr1) => arr1[2] == 7));
 console.log(filterData);
+console.log(filterData.length);
 const obj = new Model();
 const cal = new CalendarCalculator();
 console.log(cal.timeStamp);
