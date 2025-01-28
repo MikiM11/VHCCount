@@ -7,7 +7,7 @@ class Controller {
     }
 
     startRender() {
-        this.view.render(this.model.getData);
+        this.view.render(this.model.data);
     }
 }
 
