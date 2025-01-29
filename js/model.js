@@ -20,39 +20,21 @@ class Model {
 //načítá a zpracovává data z uložiště
 class DataStorage {
   constructor() {
-    this.rawData = [
-      [
-        ["ID", "DAY", "MONTH", "YEAR", "OFFER", "USER"],
-        [1715152478221, 8, 5, 2024, "Y", "Miki"],
-        [1715152531897, 8, 5, 2024, "N", "Miki"],
-        [1715152628994, 8, 5, 2024, "Y", "Miki"],
-        [1715152629456, 8, 5, 2024, "N", "Jirka"],
-        [1717246409143, 1, 6, 2024, "Y", "Miki"],
-        [1717246425616, 1, 6, 2024, "Y", "Jirka"],
-        [1717246425616, 1, 6, 2024, "Y", "Miki"],
-        [1717246502222, 1, 6, 2024, "Y", "Jirka"],
-        [1717246515464, 1, 6, 2024, "Y", "Miki"],
-        [1717246527213, 1, 6, 2024, "N", "Jirka"],
-        [1717246549559, 1, 6, 2024, "N", "Miki"],
-        [1717246560293, 1, 6, 2024, "N", "Jirka"],
-        [1717246575869, 1, 6, 2024, "N", "Miki"],
-        [1717246589742, 1, 6, 2024, "N", "Jirka"],
-        [1721750861144, 23, 1, 2025, "Y", "Miki"],
-        [1721751051000, 23, 1, 2025, "N", "Miki"],
-        [1721752668000, 23, 1, 2025, "Y", "Jirka"],
-        [1721752724000, 23, 1, 2025, "N", "Jirka"],
-        [1721752766000, 23, 1, 2025, "Y", "Miki"],
-        [1721752873935, 23, 1, 2025, "N", "Miki"],
-      ],
-      [
-        ["MONTH", "YEAR", "GOAL"],
-        [5, 2024, 18],
-        [6, 2024, 18],
-        [7, 2024, 17],
-        [8, 2024, 18],
-        [1, 2025, 19],
-      ],
-    ];
+    this.rawData = [];
+  }
+
+  //stažení dat z adresy URL https://script.google.com/macros/s/AKfycbz9T-wq0IauowCnabGpRkLl-SuuomzrqIVq1JSCOeTNvTz0ZL6xzu5AMkWOBoV8j72HVw/exec
+  async fetchData() {
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbz9T-wq0IauowCnabGpRkLl-SuuomzrqIVq1JSCOeTNvTz0ZL6xzu5AMkWOBoV8j72HVw/exec');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      this.rawData = data;
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
   }
 
   getGoal(month) {
@@ -79,9 +61,15 @@ class CalendarCalculator {
 }
 
 //ladící a testovací informace
-const Cal = new CalendarCalculator();
-console.log(Cal.timeStamp);
-const Obj = new Model();
-console.log(Obj.data);
-const Data = new DataStorage();
-console.log(Data.getGoal(Cal.month));
+(async () => {
+  const cal = new CalendarCalculator();
+  console.log(cal.timeStamp);
+
+  const data = new DataStorage();
+  await data.fetchData(); // Čekání na načtení dat
+  console.log(data.rawData); // Zobrazení načtených dat
+  console.log(data.getGoal(cal.month)); // Zobrazení cíle pro aktuální měsíc
+
+  const obj = new Model();
+  console.log(obj.data);
+})();

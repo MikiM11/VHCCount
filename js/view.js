@@ -6,9 +6,9 @@ class View {
         this.monthName = document.getElementById("month");
         this.goal = document.getElementById("goal");
     }
-    render(value) {
-        this.todayLabel.innerText = value.todayLabel;
-        this.monthName.innerText = value.monthName;
-        this.goal.innerText = value.goal;
+    render(data) {
+        this.todayLabel.innerText = data.todayLabel;
+        this.monthName.innerText = data.monthName;
+        this.goal.innerText = data.goal;
     }
 }
