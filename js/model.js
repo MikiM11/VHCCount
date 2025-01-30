@@ -2,20 +2,22 @@
 
 class Model {
   constructor() {
-    //data předávaná controlleru
-    this._data = {};
+      this._data = {};
+      this.calendar = new CalendarCalculator();
+      this.dataStorage = new DataStorage();
   }
-  //připravuje a předává data do controlleru pro zobrazení
-  get data() {
-    this.calendar = new CalendarCalculator();
-    this._data.todayLabel = this.calendar.todayLabel;
-    this._data.monthName = this.calendar.monthName;
-    this._data.month = this.calendar.month;
-    const dataStorage = new DataStorage();
-    this._data.goal = dataStorage.getGoal(this.calendar.month);
-    return this._data;
+
+  async getData() {
+      await this.dataStorage.fetchData();
+      this._data.todayLabel = this.calendar.todayLabel;
+      this._data.monthName = this.calendar.monthName;
+      this._data.month = this.calendar.month;
+      this._data.goal = this.dataStorage.getGoal(this.calendar.month);
+
+      return this._data;
   }
 }
+
 
 //načítá a zpracovává data z uložiště
 class DataStorage {
@@ -23,10 +25,10 @@ class DataStorage {
     this.rawData = [];
   }
 
-  //stažení dat z adresy URL https://script.google.com/macros/s/AKfycbz9T-wq0IauowCnabGpRkLl-SuuomzrqIVq1JSCOeTNvTz0ZL6xzu5AMkWOBoV8j72HVw/exec
+  //stažení dat z URL 
   async fetchData() {
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbz9T-wq0IauowCnabGpRkLl-SuuomzrqIVq1JSCOeTNvTz0ZL6xzu5AMkWOBoV8j72HVw/exec');
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwNh_ZdMimH3gCMZ5zhwpdqpNyFpXYIIv20mz8Mx2KN8s7F2dyn1SM6cM0LB-FVq1uu7g/exec');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -61,15 +63,9 @@ class CalendarCalculator {
 }
 
 //ladící a testovací informace
-(async () => {
   const cal = new CalendarCalculator();
   console.log(cal.timeStamp);
+  console.log(cal.month);
 
-  const data = new DataStorage();
-  await data.fetchData(); // Čekání na načtení dat
-  console.log(data.rawData); // Zobrazení načtených dat
-  console.log(data.getGoal(cal.month)); // Zobrazení cíle pro aktuální měsíc
-
-  const obj = new Model();
-  console.log(obj.data);
-})();
+  const model = new Model();
+  console.log(model.getData());

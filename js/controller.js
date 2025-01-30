@@ -6,8 +6,13 @@ class Controller {
         this.model = model;
     }
 
-    startRender() {
-        this.view.render(this.model.data);
+    async startRender() {
+        try {
+            const data = await this.model.getData();
+            this.view.render(data);
+        } catch (error) {
+            console.error("Chyba při načítání dat:", error);
+        }
     }
 }
 
