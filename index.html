@@ -2,64 +2,83 @@
 <html lang="cs">
 
 <head>
+  <!-- Meta informace o stránce -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Miki Gerlašinský" />
+  <meta name="description" content="Aplikace pro počítání odeslaných VHC s cílem a statistikami." />
+  <!-- CSS soubory Bootstrapu a ikon -->
   <link rel="stylesheet" href="css/bootstrap.css" />
   <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+  <!-- Favicony pro různé platformy -->
   <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png" />
-  <link rel="shortcut icon" type="image/png" href="img/favicon/favicon-16x16.png" />
   <link rel="manifest" href="img/favicon/site.webmanifest" />
+
+  <!-- Název stránky -->
   <title>VHC - počet</title>
 </head>
 
-<body class="container">
-  <div class="row mt-3 mb-3">
-    <div class="col">
-      <h4>Spočítej to... VHC</h4>
-    </div>
-    <div class="col">
-      <img src="img/logo.jpeg" alt="Logo Ford" width="100" class="float-end" />
-    </div>
-  </div>
-  <hr />
-  <div class="container border rounded p-3">
-    <div class="row">
-      <div id="todayLabel">dnes je</div>
-    </div>
-    <div class="row">
+<body class="d-flex flex-column min-vh-100">
+  <!-- Hlavní obsah stránky -->
+  <div class="container flex-grow-1">
+    <!-- Hlavička stránky -->
+    <header class="row p-3">
       <div class="col">
-        <div class="h6">Cíl <span id="month"></span></div>
-        <div class="h1" id="goal">-</div>
+        <h4>Spočítej to... VHC</h4>
+        <div class="text-body-secondary">Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá <span id="remainingDays">-</span> dní</div>
       </div>
       <div class="col">
-        <div class="h6">Odeslaná VHC</div>
-        <div class="h1" id="sentVHC">-</div>
-        <div>
-          <button type="button" class="btn btn-success" title="s nabídkou">
-            0 <i class="bi bi-clipboard-check pe-1"></i>
-          </button>
-          <button type="button" class="btn btn-warning" title="bez nabídky">
-            0 <i class="bi bi-clipboard pe-1"></i>
-          </button>
+        <img src="img/logo.jpeg" alt="Logo Ford" width="100" class="float-end" />
+      </div>
+      <hr class="mt-2" />
+    </header>
+    <!-- Prostor pro spinner a zprávy -->
+    <div class="text-center mb-3" id="flashNews">
+      <span id="spinner" class="spinner-border text-primary" role="status" style="visibility: hidden"></span>
+    </div>
+
+    <!-- Hlavní data aplikace -->
+    <div class="container border rounded p-3">
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="h6">Cíl <span id="month"></span></div>
+          <div class="h1" id="goal">-</div>
+        </div>
+
+        <div class="col">
+          <div class="h6">Odeslaná VHC</div>
+          <div class="h1" id="sentVHC">-</div>
+          <div>
+            <!-- Tlačítko pro VHC s nabídkou -->
+            <button id="btnWithOffer" type="button" class="btn btn-success" title="s nabídkou">
+              0 <i class="bi bi-clipboard-check pe-1"></i>
+            </button>
+            <!-- Tlačítko pro VHC bez nabídky -->
+            <button id="btnWithoutOffer" type="button" class="btn btn-warning" title="bez nabídky">
+              0 <i class="bi bi-clipboard pe-1"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="h6">Zbývá odeslat</div>
+          <div class="h1" id="remainingVHC">-</div>
         </div>
       </div>
-      <div class="col">
-        <div class="h6"><span>Zbývá odeslat</span></div>
-        <div class="h1" id="remainingVHC">-</div>
-      </div>
-    </div>
-  </div>
-  <div class="align-self-end">
-    <div class="text-center fw-lighter p-0 m-0">
-      <small>v0.4 miki© 2024 - 2025</small>
     </div>
   </div>
 
+  <!-- Footer stránky - umístěn na spodní straně -->
+  <footer class="text-center fw-lighter p-2 mt-auto">
+    <small class="border-top">v0.5 miki© 2024 - 2025</small>
+  </footer>
+
+  <!-- JavaScript soubory -->
   <script src="js/model.js"></script>
   <script src="js/view.js"></script>
   <script src="js/controller.js"></script>
 </body>
-
 </html>
