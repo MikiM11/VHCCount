@@ -5,7 +5,7 @@ class Model {
     this.dataStorage = new DataStorage();
   }
 
-  //Vrací kalendářní data
+  //Vrací kalendářní data pro View
   getCalendarData() {
     this.calendar = new CalendarCalculator();
 
@@ -13,9 +13,11 @@ class Model {
       todayLabel: this.calendar.todayLabel,
       monthName: this.calendar.monthName,
       month: this.calendar.month,
+      remainingDaysInMonth: this.calendar.remainingDaysInMonth,
     };
   }
 
+  //Načte a vrací VHC data pro View
   async fetchVHCData() {
     await this.dataStorage.fetchData();
     const calendar = new CalendarCalculator();
@@ -36,7 +38,7 @@ class Model {
   }
 }
 
-//načítá a zpracovává data z uložiště
+//CLASS - načítá a zpracovává data z uložiště
 class DataStorage {
   constructor() {
     this.rawData = [];
@@ -78,8 +80,7 @@ class DataStorage {
     const filteredVHC = vhcRecords.filter(
       (record) => record[2] === month && record[3] === year
     );
-
-    return filteredVHC.length; // Počet odeslaných VHC pro daný měsíc a rok
+    return filteredVHC.length; // Vrací počet odeslaných VHC pro daný měsíc a rok
   }
 
   //zjištění zbývajícího počtu VHC pro daný měsíc a rok - odečítá odeslané VHC od cíle
@@ -91,10 +92,10 @@ class DataStorage {
   }
 }
 
-//třída pracující s kalendářem
+//CLASS - třída pracující s kalendářem
 class CalendarCalculator {
   constructor() {
-    this.calDate = new Date(); //dnešní datum
+    this.calDate = new Date(); //objekt s aktuálním datem
     this.timeStamp = Date.now(); //časová značka
     this.date = this.calDate.getDate(); //dnešní datum
     this.weekDay = new Intl.DateTimeFormat("cz-CZ", { weekday: "long" }).format(
@@ -109,5 +110,9 @@ class CalendarCalculator {
   //formátované dnešní datum
   get todayLabel() {
     return this.weekDay + " " + this.calDate.toLocaleDateString();
+  }
+  //Vrací počet dní do konce měsíce
+  get remainingDaysInMonth() {
+    return (new Date(this.year, this.month, 0).getDate()) - this.date;
   }
 }
