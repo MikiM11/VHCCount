@@ -1,6 +1,7 @@
-import Model from "./models/Model.js";
-import View from "./view.js";
+import Model from "./models/Model.js"; // Import třídy Model - zpracování dat
+import View from "./view.js"; // Import třídy View - zobrazování dat
 
+// Třída Controller - řídí komunikaci mezi modelem a view
 export default class Controller {
     constructor(view, model) {
         this.view = view;
