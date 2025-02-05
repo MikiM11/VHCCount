@@ -1,6 +1,8 @@
-import DataStorage from "./DataStorage.js";
-import CalendarCalculator from "./CalendarCalculator.js";
+import DataStorage from "./DataStorage.js"; //importuje třídu pro práci s daty
+import CalendarCalculator from "./CalendarCalculator.js"; //importuje třídu pro práci s kalendářem
 
+
+//Třída Model zajišťuje zpracování dat a jejich přípravu pro View
 export default class Model {
   constructor() {
     this.dataStorage = new DataStorage();

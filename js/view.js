@@ -1,3 +1,4 @@
+// Třída View - zobrazuje data na stránce
 export default class View {
     constructor() {
         this.todayLabel = document.getElementById("todayLabel");
