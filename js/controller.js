@@ -1,6 +1,7 @@
-"use strict"
+import Model from "./models/Model.js";
+import View from "./view.js";
 
-class Controller {
+export default class Controller {
     constructor(view, model) {
         this.view = view;
         this.model = model;
