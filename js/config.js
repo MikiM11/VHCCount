@@ -1,0 +1,1 @@
+export const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycby6bA4ZftgZov4ZkERPIrJsQR2_5nXqTnwI44EEfryZ5HCJZSJB5ZUAWo6VXOyJawDgUg/exec";

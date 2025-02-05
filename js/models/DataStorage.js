@@ -1,16 +1,15 @@
-//CLASS - načítá a zpracovává data z uložiště
+import { GOOGLE_SHEET_URL } from "../config.js"; // Import cesty k datům
 
+//CLASS - načítá a zpracovává data z uložiště
 export default class DataStorage {
     constructor() {
-      this.rawData = [];
+      this.rawData = []; // Pole pro načtená data
     }
   
     //stažení dat z URL
     async fetchData() {
       try {
-        const response = await fetch(
-          "https://script.google.com/macros/s/AKfycbwNh_ZdMimH3gCMZ5zhwpdqpNyFpXYIIv20mz8Mx2KN8s7F2dyn1SM6cM0LB-FVq1uu7g/exec"
-        );
+        const response = await fetch(GOOGLE_SHEET_URL);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -50,5 +49,23 @@ export default class DataStorage {
       const sent = this.getSentVHC(month, year);
   
       return Math.max(0, goal - sent); //Zajišťuje, aby výsledek nebyl záporný
+    }
+
+    // Přidání nového záznamu o odeslaném VHC do datového úložiště
+    async sendVHC(data) {
+      try {
+        const response = await fetch(GOOGLE_SHEET_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json"},
+          body: JSON.stringify(data),
+          mode: "cors"
+        });
+        const result = await response.json();
+        console.log("Odpověď serveru:", result);
+        return result;
+      } catch (error) {
+        console.error("Chyba při odesílání dat:", error);
+        return { status: "error", message: error.message };
+      }
     }
   }
