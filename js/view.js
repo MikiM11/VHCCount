@@ -1,6 +1,4 @@
-"use strict";
-
-class View {
+export default class View {
     constructor() {
         this.todayLabel = document.getElementById("todayLabel");
         this.remainingDays = document.getElementById("remainingDays");
