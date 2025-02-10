@@ -6,6 +6,9 @@ export default class Controller {
     constructor(view, model) {
         this.view = view;
         this.model = model;
+
+        this.view.bindSendVHCWithOffer(this.handleSendVHCWithOffer.bind(this));
+        this.view.bindSendVHCWithoutOffer(this.handleSendVHCWithoutOffer.bind(this));
     }
 
     async startRender() {
@@ -21,6 +24,14 @@ export default class Controller {
         catch (error) {
             console.error("Chyba při načítání dat:", error);
         }
+    }
+
+    async handleSendVHCWithOffer(offer) {
+        await this.model.sendVHC(offer);
+    }
+
+    async handleSendVHCWithoutOffer(offer) {
+        await this.model.sendVHC(offer);
     }
 }
 

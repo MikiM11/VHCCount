@@ -58,7 +58,7 @@ export default class DataStorage {
           method: "POST",
           headers: { "Content-Type": "application/json"},
           body: JSON.stringify(data),
-          mode: "cors"
+          mode: "no-cors"
         });
         const result = await response.json();
         console.log("Odpověď serveru:", result);
