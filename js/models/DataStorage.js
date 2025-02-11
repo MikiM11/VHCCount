@@ -22,6 +22,7 @@ export default class DataStorage {
       );
     }
   }
+
   //zjištění cíle pro daný měsíc - vybírá data z druhého pole
   getGoal(month, year) {
     const filteredData = this.rawData[1].filter(
@@ -29,6 +30,7 @@ export default class DataStorage {
     );
     return filteredData.length > 0 ? filteredData[0][2] : 0;
   }
+
   //zjištění počtu odeslaných VHC pro daný měsíc a rok - vybírá data z prvního pole
   getSentVHC(month, year) {
     if (!this.rawData[0] || this.rawData[0].length === 0) return 0; // Ochrana proti chybě
@@ -51,7 +53,7 @@ export default class DataStorage {
     return Math.max(0, goal - sent); //Zajišťuje, aby výsledek nebyl záporný
   }
 
-  // Přidání nového záznamu o odeslaném VHC do datového úložiště
+  // Přidání - odeslání nového záznamu do datového úložiště
   async sendVHC(data) {
     try {
       const formData = new FormData();

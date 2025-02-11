@@ -1,3 +1,4 @@
+import FlashNews from "./components/FlashNews.js";
 export default class View {
   constructor() {
     this.todayLabel = document.getElementById("todayLabel");
@@ -9,19 +10,23 @@ export default class View {
     this.spinner = document.getElementById("spinner");
     this.btnWithOffer = document.getElementById("btnWithOffer");
     this.btnWithoutOffer = document.getElementById("btnWithoutOffer");
+    
+    this.flashNews = new FlashNews("flashNews");
   }
 
-  bindSendVHCWithOffer(handler) {
+  setSendVHCWithOffer(handler) {
     this.btnWithOffer.addEventListener("click", () => {
-      handler("Y");
+      this.spinner.style.visibility = "visible";
+      handler();
     });
   }
 
-  bindSendVHCWithoutOffer(handler) {
+  setSendVHCWithoutOffer(handler) {
     this.btnWithoutOffer.addEventListener("click", () => {
-      handler("N");
+      this.spinner.style.visibility = "visible";
+      handler();
     });
-  }
+  };
 
   renderCalendar(data) {
     this.spinner.style.visibility = "visible";
@@ -35,5 +40,9 @@ export default class View {
     this.sentVHC.innerText = data.sentVHC;
     this.remainingVHC.innerText = data.remainingVHC;
     this.spinner.style.visibility = "hidden";
+  }
+
+  showFlashMessage(message, type = "info", timeout = 5000) {
+    this.flashNews.showMessage(message, type, timeout);
   }
 }

@@ -24,19 +24,18 @@
   <div class="container flex-grow-1">
     <!-- Hlavička stránky -->
     <header class="row p-3">
+      <!-- Prostor pro zprávy -->
+    <div class="position-fixed top-0 start-50 translate-middle-x w-75 z-3" id="flashNews"></div>
       <div class="col">
         <h4>Spočítej to... VHC</h4>
-        <div class="text-body-secondary">Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá <span id="remainingDays">-</span> dní</div>
+        <div class="text-body-secondary">Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá <span id="remainingDays">-</span> dní. <span id="spinner" class="spinner-border spinner-border-sm text-primary" role="status" style="visibility: hidden"></span></div>
       </div>
       <div class="col">
         <img src="img/logo.jpeg" alt="Logo Ford" width="100" class="float-end" />
       </div>
       <hr class="mt-2" />
     </header>
-    <!-- Prostor pro spinner a zprávy -->
-    <div class="text-center mb-3" id="flashNews">
-      <span id="spinner" class="spinner-border text-primary" role="status" style="visibility: hidden"></span>
-    </div>
+    
 
     <!-- Hlavní data aplikace -->
     <div class="container border rounded p-3">

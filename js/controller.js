@@ -7,8 +7,8 @@ export default class Controller {
         this.view = view;
         this.model = model;
 
-        this.view.bindSendVHCWithOffer(this.handleSendVHCWithOffer.bind(this));
-        this.view.bindSendVHCWithoutOffer(this.handleSendVHCWithoutOffer.bind(this));
+        this.view.setSendVHCWithOffer(() => this.handleSendVHC("Y"));
+        this.view.setSendVHCWithoutOffer(() => this.handleSendVHC("N"));
     }
 
     async startRender() {
@@ -26,12 +26,10 @@ export default class Controller {
         }
     }
 
-    async handleSendVHCWithOffer(offer) {
+    async handleSendVHC(offer) {
         await this.model.sendVHC(offer);
-    }
-
-    async handleSendVHCWithoutOffer(offer) {
-        await this.model.sendVHC(offer);
+        this.view.showFlashMessage("VHC bylo úspěšně odesláno", "success");         
+        this.startRender();
     }
 }
 
