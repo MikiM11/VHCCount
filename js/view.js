@@ -10,17 +10,32 @@ export default class View {
     this.spinner = document.getElementById("spinner");
     this.btnWithOffer = document.getElementById("btnWithOffer");
     this.btnWithoutOffer = document.getElementById("btnWithoutOffer");
-    
-    this.flashNews = new FlashNews("flashNews");
+    this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
+    this.disableButtons(true); //vypnutí tlačítek
+    this.vhcData = {};  //Objekt pro ukládání dat localStorage
   }
 
+  //Metoda pro uložení uživatele do localStorage
+  //TODO: Dodělat metodu pro uložení uživatele do localStorage
+  saveUserToLocalStorage(user) {
+    this.vhcData = {user: user};  //Uložení uživatele do objektu 
+    localStorage.setItem("VHCData",JSON.stringify(this.vhcData)); //Uložení objektu do localStorage
+  }
+  
+  //Metoda pro zapnutí / vypnutí tlačítek
+  disableButtons(state) {
+    this.btnWithOffer.disabled = state;
+    this.btnWithoutOffer.disabled = state;
+  }
+
+  // Metoda pro nastavení události tlačítka pro odeslání VHC s nabídkou
   setSendVHCWithOffer(handler) {
     this.btnWithOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
       handler();
     });
   }
-
+  // Metoda pro nastavení události tlačítka pro odeslání VHC bez nabídky
   setSendVHCWithoutOffer(handler) {
     this.btnWithoutOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
@@ -28,6 +43,7 @@ export default class View {
     });
   };
 
+  //Metoda pro vykreslení kalendářních dat
   renderCalendar(data) {
     this.spinner.style.visibility = "visible";
     this.todayLabel.innerText = data.todayLabel;
@@ -35,6 +51,7 @@ export default class View {
     this.remainingDays.innerText = data.remainingDaysInMonth;
   }
 
+  //Metoda pro vykreslení statistik VHC
   updateVHCStats(data) {
     this.goal.innerText = data.goal;
     this.sentVHC.innerText = data.sentVHC;
@@ -42,6 +59,7 @@ export default class View {
     this.spinner.style.visibility = "hidden";
   }
 
+  //Zobrazí flash zprávu
   showFlashMessage(message, type = "info", timeout = 5000) {
     this.flashNews.showMessage(message, type, timeout);
   }

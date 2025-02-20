@@ -13,29 +13,32 @@
   <!-- Favicony pro různé platformy -->
   <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
-  <link rel="manifest" href="img/favicon/site.webmanifest" />
-
   <!-- Název stránky -->
   <title>VHC - počet</title>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
   <!-- Hlavní obsah stránky -->
-  <div class="container flex-grow-1">
+  <div class="container">
     <!-- Hlavička stránky -->
-    <header class="row p-3">
+    <header class="row p-3 d-flex">
       <!-- Prostor pro zprávy -->
-    <div class="position-fixed top-0 start-50 translate-middle-x w-75 z-3" id="flashNews"></div>
+      <div class="position-fixed top-10 start-50 translate-middle-x w-75 z-3" id="flashNews"></div>
       <div class="col">
         <h4>Spočítej to... VHC</h4>
-        <div class="text-body-secondary">Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá <span id="remainingDays">-</span> dní. <span id="spinner" class="spinner-border spinner-border-sm text-primary" role="status" style="visibility: hidden"></span></div>
+        <!-- Zobrazení aktuálního data a zbývajících dní do konce měsíce a spinner -->
+        <div class="text-body-secondary">Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá
+          <span id="remainingDays">-</span> dní. <span id="spinner"
+            class="spinner-border spinner-border-sm text-primary" role="status" style="visibility: hidden"></span>
+        </div>
       </div>
-      <div class="col">
-        <img src="img/logo.jpeg" alt="Logo Ford" width="100" class="float-end" />
+      <div class="col text-end">
+        <img src="img/logo.jpeg" alt="Logo Ford" width="100"/>
+        <div class="text-body-secondary">Zapisuje: <a href="">nikdo</a></div>
       </div>
       <hr class="mt-2" />
     </header>
-    
+
 
     <!-- Hlavní data aplikace -->
     <div class="container border rounded p-3">
@@ -78,4 +81,5 @@
   <!-- JavaScript soubory -->
   <script type="module" src="js/controller.js"></script>
 </body>
+
 </html>

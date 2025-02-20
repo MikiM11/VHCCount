@@ -35,3 +35,4 @@ export default class Controller {
 
 const app = new Controller(new View(), new Model());
 app.startRender();
+app.view.saveUserToLocalStorage("Jirka"); //Uložení uživatele do localStorage
