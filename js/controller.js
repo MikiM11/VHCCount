@@ -26,6 +26,7 @@ export default class Controller {
         }
     }
 
+    //handler pro odeslání dat o VHC, spouští se po kliknutí na tlačítko
     async handleSendVHC(offer) {
         await this.model.sendVHC(offer);
         this.view.showFlashMessage("VHC bylo úspěšně odesláno", "success");         
