@@ -10,16 +10,26 @@ export default class View {
     this.spinner = document.getElementById("spinner");
     this.btnWithOffer = document.getElementById("btnWithOffer");
     this.btnWithoutOffer = document.getElementById("btnWithoutOffer");
+    this.user = document.getElementById("user");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.disableButtons(true); //vypnutí tlačítek
     this.vhcData = {};  //Objekt pro ukládání dat localStorage
   }
 
   //Metoda pro uložení uživatele do localStorage
-  //TODO: Dodělat metodu pro uložení uživatele do localStorage
   saveUserToLocalStorage(user) {
     this.vhcData = {user: user};  //Uložení uživatele do objektu 
     localStorage.setItem("VHCData",JSON.stringify(this.vhcData)); //Uložení objektu do localStorage
+  }
+
+  //Metoda pro načtení uživatele z localStorage
+  loadUserFromLocalStorage() {
+    const data = localStorage.getItem("VHCData");
+    if (data) {
+      this.vhcData = JSON.parse(data);
+      return this.vhcData.user;
+    }
+    return null;
   }
   
   //Metoda pro zapnutí / vypnutí tlačítek
@@ -32,6 +42,7 @@ export default class View {
   setSendVHCWithOffer(handler) {
     this.btnWithOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
+      this.disableButtons(true);
       handler();
     });
   }
@@ -39,6 +50,7 @@ export default class View {
   setSendVHCWithoutOffer(handler) {
     this.btnWithoutOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
+      this.disableButtons(true);
       handler();
     });
   };
@@ -57,6 +69,11 @@ export default class View {
     this.sentVHC.innerText = data.sentVHC;
     this.remainingVHC.innerText = data.remainingVHC;
     this.spinner.style.visibility = "hidden";
+    //pokud existuje uživatel v localStorage, zobrazí se jeho jméno a povolí se tlačítka
+    if (this.loadUserFromLocalStorage()) {
+      this.user.innerText = this.loadUserFromLocalStorage();
+      this.disableButtons(false);
+    }
   }
 
   //Zobrazí flash zprávu
