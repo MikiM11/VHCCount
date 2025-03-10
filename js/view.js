@@ -10,7 +10,7 @@ export default class View {
     this.spinner = document.getElementById("spinner");
     this.btnWithOffer = document.getElementById("btnWithOffer");
     this.btnWithoutOffer = document.getElementById("btnWithoutOffer");
-    this.user = document.getElementById("user");
+    this.userName = document.getElementById("user");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.disableButtons(true); //vypnutí tlačítek
     this.vhcData = {};  //Objekt pro ukládání dat localStorage
@@ -55,6 +55,19 @@ export default class View {
     });
   };
 
+  //Metoda pro výběr a změnu uživatele po kliknití na odkaz user
+  //!! Dodělat - nefunguje 
+  selectUser() {
+    this.userName.addEventListener("click", (e) => {
+      e.preventDefault();
+      const user = prompt("Zadejte jméno uživatele");
+      if (user) {
+        this.saveUserToLocalStorage(user);
+        this.userName.innerText = user;
+      }
+    });
+  }
+
   //Metoda pro vykreslení kalendářních dat
   renderCalendar(data) {
     this.spinner.style.visibility = "visible";
@@ -71,7 +84,7 @@ export default class View {
     this.spinner.style.visibility = "hidden";
     //pokud existuje uživatel v localStorage, zobrazí se jeho jméno a povolí se tlačítka
     if (this.loadUserFromLocalStorage()) {
-      this.user.innerText = this.loadUserFromLocalStorage();
+      this.userName.innerText = this.loadUserFromLocalStorage();
       this.disableButtons(false);
     }
   }
