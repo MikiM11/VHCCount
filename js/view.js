@@ -14,6 +14,7 @@ export default class View {
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.disableButtons(true); //vypnutí tlačítek
     this.vhcData = {};  //Objekt pro ukládání dat localStorage
+    this.selectUser(); //Metoda pro výběr uživatele po kliknutí na odkaz user
   }
 
   //Metoda pro uložení uživatele do localStorage
@@ -36,7 +37,10 @@ export default class View {
   disableButtons(state) {
     this.btnWithOffer.disabled = state;
     this.btnWithoutOffer.disabled = state;
-  }
+
+    this.userName.style.pointerEvents = state ? "none" : "auto"; 
+    this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
+}
 
   // Metoda pro nastavení události tlačítka pro odeslání VHC s nabídkou
   setSendVHCWithOffer(handler) {
@@ -56,7 +60,6 @@ export default class View {
   };
 
   //Metoda pro výběr a změnu uživatele po kliknití na odkaz user
-  //!! Dodělat - nefunguje 
   selectUser() {
     this.userName.addEventListener("click", (e) => {
       e.preventDefault();
