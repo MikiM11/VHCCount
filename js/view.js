@@ -13,6 +13,7 @@ export default class View {
     this.userName = document.getElementById("user");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.disableButtons(true); //vypnutí tlačítek
+    this.disableUserLink(true); //vypnutí odkazu user
     this.vhcData = {};  //Objekt pro ukládání dat localStorage
     this.selectUser(); //Metoda pro výběr uživatele po kliknutí na odkaz user
   }
@@ -37,9 +38,12 @@ export default class View {
   disableButtons(state) {
     this.btnWithOffer.disabled = state;
     this.btnWithoutOffer.disabled = state;
+}
 
-    this.userName.style.pointerEvents = state ? "none" : "auto"; 
-    this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
+//Metoda pro znepřístupnění odkazu user
+disableUserLink(state) {
+  this.userName.style.pointerEvents = state ? "none" : "auto";
+  this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
 }
 
   // Metoda pro nastavení události tlačítka pro odeslání VHC s nabídkou
@@ -47,6 +51,7 @@ export default class View {
     this.btnWithOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
       this.disableButtons(true);
+      this.disableUserLink(true);
       handler();
     });
   }
@@ -55,6 +60,7 @@ export default class View {
     this.btnWithoutOffer.addEventListener("click", () => {
       this.spinner.style.visibility = "visible";
       this.disableButtons(true);
+      this.disableUserLink(true);
       handler();
     });
   };
@@ -67,6 +73,7 @@ export default class View {
       if (user) {
         this.saveUserToLocalStorage(user);
         this.userName.innerText = user;
+        this.disableButtons(false);
       }
     });
   }
@@ -88,9 +95,14 @@ export default class View {
     //pokud existuje uživatel v localStorage, zobrazí se jeho jméno a povolí se tlačítka
     if (this.loadUserFromLocalStorage()) {
       this.userName.innerText = this.loadUserFromLocalStorage();
-      this.disableButtons(false);
+      this.disableButtons(false); //zapne tlačítka
+      this.disableUserLink(false); //zapne odkaz user
     }
+    else {
+      this.disableButtons(true); //vypne tlačítka
+      this.disableUserLink(false); //zapne odkaz user
   }
+}
 
   //Zobrazí flash zprávu
   showFlashMessage(message, type = "info", timeout = 5000) {
