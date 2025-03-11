@@ -41,7 +41,7 @@ export default class Model {
   }
 
   //Odeslání nového záznamu o VHC
-  async sendVHC(offer) {
+  async sendVHC(offer, user) {
     const calendar = new CalendarCalculator();
     const data = {
       id: calendar.timeStamp,
@@ -49,7 +49,7 @@ export default class Model {
       month: calendar.month,
       year: calendar.year,
       offer: offer,
-      user: "Miki"
+      user: user
     };
     await this.dataStorage.sendVHC(data);
   }

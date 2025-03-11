@@ -40,7 +40,7 @@ export default class View {
     this.btnWithoutOffer.disabled = state;
 }
 
-//Metoda pro znepřístupnění odkazu user
+//Metoda pro znepřístupnění odkazu - linku ID=user
 disableUserLink(state) {
   this.userName.style.pointerEvents = state ? "none" : "auto";
   this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
@@ -52,7 +52,7 @@ disableUserLink(state) {
       this.spinner.style.visibility = "visible";
       this.disableButtons(true);
       this.disableUserLink(true);
-      handler();
+      handler("Y", this.userName.innerText); //Y je Yes, tedy nabídka, this.userName.innerText je jméno uživatele
     });
   }
   // Metoda pro nastavení události tlačítka pro odeslání VHC bez nabídky
@@ -61,7 +61,7 @@ disableUserLink(state) {
       this.spinner.style.visibility = "visible";
       this.disableButtons(true);
       this.disableUserLink(true);
-      handler();
+      handler("N", this.userName.innerText); //N je No, tedy bez nabídky, this.userName.innerText je jméno uživatele  
     });
   };
 

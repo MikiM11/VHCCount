@@ -6,9 +6,9 @@ export default class Controller {
     constructor(view, model) {
         this.view = view;
         this.model = model;
-
-        this.view.setSendVHCWithOffer(() => this.handleSendVHC("Y"));
-        this.view.setSendVHCWithoutOffer(() => this.handleSendVHC("N"));
+        //! Tady je chyba
+        this.view.setSendVHCWithOffer(() => this.handleSendVHC(offer, user));
+        this.view.setSendVHCWithoutOffer(() => this.handleSendVHC(offer, user));
     }
 
     async startRender() {
@@ -27,8 +27,8 @@ export default class Controller {
     }
 
     //handler pro odeslání dat o VHC, spouští se po kliknutí na tlačítko
-    async handleSendVHC(offer) {
-        await this.model.sendVHC(offer);
+    async handleSendVHC(offer, user) {
+        await this.model.sendVHC(offer, user);
         this.view.showFlashMessage("VHC bylo úspěšně odesláno", "success");         
         this.startRender();
     }
