@@ -6,9 +6,8 @@ export default class Controller {
     constructor(view, model) {
         this.view = view;
         this.model = model;
-        //! Tady je chyba
-        this.view.setSendVHCWithOffer(() => this.handleSendVHC(offer, user));
-        this.view.setSendVHCWithoutOffer(() => this.handleSendVHC(offer, user));
+        this.view.setSendVHCWithOffer((offer, user) => this.handleSendVHC(offer, user));
+        this.view.setSendVHCWithoutOffer((offer, user) => this.handleSendVHC(offer, user));
     }
 
     async startRender() {
