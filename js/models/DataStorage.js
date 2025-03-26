@@ -53,6 +53,51 @@ export default class DataStorage {
     return Math.max(0, goal - sent); //Zajišťuje, aby výsledek nebyl záporný
   }
 
+  //TODO: získání detailů o VHC pro daný měsíc a rok, celkový počet VHC pro jednotlivé uživatele,
+  // a počet s nabídkou a bez nabídky, pro uživatele
+  getVHCDetails(month, year) {
+    if (!this.rawData[0] || this.rawData[0].length === 0) return []; // Ochrana proti chybě
+
+    // Odstraníme první řádek (hlavičku)
+    const vhcRecords = this.rawData[0].slice(1);
+    const userColors = this.rawData[2].slice(1); // Data o uživatelích a jejich barvách
+
+    // Filtrování podle měsíce a roku
+    const filteredVHC = vhcRecords.filter(
+      (record) => record[2] === month && record[3] === year
+    );
+
+    // Agregace dat podle uživatele
+    const userDetails = {};
+    filteredVHC.forEach((record) => {
+      const user = record[5]; // Uživatelské jméno
+      const hasOffer = record[4] === "Y"; // Nabídka (Y/N)
+
+      if (!userDetails[user]) {
+        userDetails[user] = { total: 0, withOffer: 0, withoutOffer: 0, color: null };
+      }
+
+      userDetails[user].total += 1;
+      if (hasOffer) {
+        userDetails[user].withOffer += 1;
+      } else {
+        userDetails[user].withoutOffer += 1;
+      }
+    });
+
+    // Přidání barvy uživatelům
+    userColors.forEach(([user, color]) => {
+      if (userDetails[user]) {
+        userDetails[user].color = color;
+      }
+    });
+
+    // Vrací pole s detaily pro jednotlivé uživatele
+    return Object.entries(userDetails).map(([user, details]) => ({
+      user, ...details,
+    }));
+  }
+
   // Přidání - odeslání nového záznamu do datového úložiště
   async sendVHC(data) {
     try {

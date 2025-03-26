@@ -36,8 +36,12 @@ export default class Model {
       calendar.month,
       calendar.year
     );
-
-    return { goal, sentVHC, remainingVHC };
+    const vhcDetails = this.dataStorage.getVHCDetails(
+      calendar.month,
+      calendar.year
+    );
+    //TODO: Ověřit formát vrácených dat a případně upravit
+    return { goal, sentVHC, remainingVHC, vhcDetails };
   }
 
   //Odeslání nového záznamu o VHC

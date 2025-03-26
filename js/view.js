@@ -104,7 +104,7 @@ disableUserLink(state) {
   }
 }
 
-  //Zobrazí flash zprávu
+  //Metoda pro zobrazení flash zprávy
   showFlashMessage(message, type = "info", timeout = 5000) {
     this.flashNews.showMessage(message, type, timeout);
   }
