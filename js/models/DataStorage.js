@@ -54,7 +54,7 @@ export default class DataStorage {
   }
 
   //TODO: získání detailů o VHC pro daný měsíc a rok, celkový počet VHC pro jednotlivé uživatele,
-  // a počet s nabídkou a bez nabídky, pro uživatele
+  // a počet s nabídkou a bez nabídky, pro uživatele a barva uživatele
   getVHCDetails(month, year) {
     if (!this.rawData[0] || this.rawData[0].length === 0) return []; // Ochrana proti chybě
 
@@ -63,39 +63,21 @@ export default class DataStorage {
     const userColors = this.rawData[2].slice(1); // Data o uživatelích a jejich barvách
 
     // Filtrování podle měsíce a roku
-    const filteredVHC = vhcRecords.filter(
-      (record) => record[2] === month && record[3] === year
-    );
+    const filteredVHC = vhcRecords.filter((record) => record[2] === month && record[3] === year);
+    //TODO: Dodělat filtrování detailů
+    const uniqueUsers = [...new Set(filteredVHC.map(record => record[5]))]; // Získání unikátních uživatelů
+    const VHCDetails = uniqueUsers.map(user => {
+      const userRecosrds = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
+      const totalVHC = userRecosrds.length; // Celkový počet VHC pro uživatele
 
-    // Agregace dat podle uživatele
-    const userDetails = {};
-    filteredVHC.forEach((record) => {
-      const user = record[5]; // Uživatelské jméno
-      const hasOffer = record[4] === "Y"; // Nabídka (Y/N)
-
-      if (!userDetails[user]) {
-        userDetails[user] = { total: 0, withOffer: 0, withoutOffer: 0, color: null };
-      }
-
-      userDetails[user].total += 1;
-      if (hasOffer) {
-        userDetails[user].withOffer += 1;
-      } else {
-        userDetails[user].withoutOffer += 1;
+      return {
+        user,
+        totalVHC,
       }
     });
+    
+    return VHCDetails;
 
-    // Přidání barvy uživatelům
-    userColors.forEach(([user, color]) => {
-      if (userDetails[user]) {
-        userDetails[user].color = color;
-      }
-    });
-
-    // Vrací pole s detaily pro jednotlivé uživatele
-    return Object.entries(userDetails).map(([user, details]) => ({
-      user, ...details,
-    }));
   }
 
   // Přidání - odeslání nového záznamu do datového úložiště
