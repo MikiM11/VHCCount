@@ -69,10 +69,12 @@ export default class DataStorage {
     const VHCDetails = uniqueUsers.map(user => {
       const userRecords = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
       const totalVHC = userRecords.length; // Celkový počet VHC pro uživatele
+      const totalVHCWithOffer = userRecords.filter(record => record[4] === "Y").length;
 
       return {
         user,
         totalVHC,
+        totalVHCWithOffer,
       }
     });
     
