@@ -67,8 +67,8 @@ export default class DataStorage {
     //TODO: Dodělat filtrování detailů
     const uniqueUsers = [...new Set(filteredVHC.map(record => record[5]))]; // Získání unikátních uživatelů
     const VHCDetails = uniqueUsers.map(user => {
-      const userRecosrds = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
-      const totalVHC = userRecosrds.length; // Celkový počet VHC pro uživatele
+      const userRecords = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
+      const totalVHC = userRecords.length; // Celkový počet VHC pro uživatele
 
       return {
         user,
