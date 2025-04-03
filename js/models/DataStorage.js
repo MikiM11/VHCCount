@@ -70,11 +70,15 @@ export default class DataStorage {
       const userRecords = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
       const totalVHC = userRecords.length; // Celkový počet VHC pro uživatele
       const totalVHCWithOffer = userRecords.filter(record => record[4] === "Y").length;
+      const totalVHCWithoutOffer = userRecords.filter(record => record[4] === "N").length;
+      const userColor = userColors.find(color => color[0] === user)?.[1]; // Získání barvy uživatele
 
       return {
         user,
         totalVHC,
         totalVHCWithOffer,
+        totalVHCWithoutOffer,
+        userColor,
       }
     });
     

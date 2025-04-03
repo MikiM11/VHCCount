@@ -11,9 +11,11 @@ export default class View {
     this.btnWithOffer = document.getElementById("btnWithOffer");
     this.btnWithoutOffer = document.getElementById("btnWithoutOffer");
     this.userName = document.getElementById("user");
+    this.details = document.getElementById("detailsButton");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.disableButtons(true); //vypnutí tlačítek
     this.disableUserLink(true); //vypnutí odkazu user
+    this.disableDetails(true); //vypnutí zobrazení detailů
     this.vhcData = {};  //Objekt pro ukládání dat localStorage
     this.selectUser(); //Metoda pro výběr uživatele po kliknutí na odkaz user
   }
@@ -44,6 +46,10 @@ export default class View {
 disableUserLink(state) {
   this.userName.style.pointerEvents = state ? "none" : "auto";
   this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
+}
+
+disableDetails(state) {
+  this.details.disabled = state;
 }
 
   // Metoda pro nastavení události tlačítka pro odeslání VHC s nabídkou
@@ -101,6 +107,12 @@ disableUserLink(state) {
     else {
       this.disableButtons(true); //vypne tlačítka
       this.disableUserLink(false); //zapne odkaz user
+  }
+  if (data.VHCDetails.length > 0) { //pokud existují detaily VHC, povolí se zobrazení detailů
+    this.disableDetails(false); //povolí zobrazení detailů
+  }
+  else {
+    this.disableDetails(true); //zakáže zobrazení detailů
   }
 }
 
