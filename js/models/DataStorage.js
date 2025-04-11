@@ -53,7 +53,41 @@ export default class DataStorage {
     return Math.max(0, goal - sent); //Zajišťuje, aby výsledek nebyl záporný
   }
 
-  //TODO: získání detailů o VHC pro daný měsíc a rok, celkový počet VHC pro jednotlivé uživatele,
+  //TODO: Zjisttit počet odelaných VHC s nabídkou
+
+  getSentVHCWithOffer(month, year) {
+    if (!this.rawData[0] || this.rawData[0].length === 0) return 0; // Ochrana proti chybě
+
+    // Odstraníme první řádek (hlavičku)
+    const vhcRecords = this.rawData[0].slice(1);
+
+    // Filtrování podle měsíce a roku
+    const filteredVHC = vhcRecords.filter(
+      (record) => record[2] === month && record[3] === year
+    );
+    const filteredVHCWithOffer = filteredVHC.filter(
+      (record) => record[4] === "Y"
+    );
+    return filteredVHCWithOffer.length; // Vrací počet odeslaných VHC s nabídkou pro daný měsíc a rok
+  }
+
+  getSentVHCWithoutOffer(month, year) {
+    if (!this.rawData[0] || this.rawData[0].length === 0) return 0; // Ochrana proti chybě
+
+    // Odstraníme první řádek (hlavičku)
+    const vhcRecords = this.rawData[0].slice(1);
+
+    // Filtrování podle měsíce a roku
+    const filteredVHC = vhcRecords.filter(
+      (record) => record[2] === month && record[3] === year
+    );
+    const filteredVHCWithoutOffer = filteredVHC.filter(
+      (record) => record[4] === "N"
+    );
+    return filteredVHCWithoutOffer.length; // Vrací počet odeslaných VHC bez nabídky pro daný měsíc a rok
+  }
+
+  //Získání detailů o VHC pro daný měsíc a rok, celkový počet VHC pro jednotlivé uživatele,
   // a počet s nabídkou a bez nabídky, pro uživatele a barva uživatele
   getVHCDetails(month, year) {
     if (!this.rawData[0] || this.rawData[0].length === 0) return []; // Ochrana proti chybě
@@ -64,14 +98,13 @@ export default class DataStorage {
 
     // Filtrování podle měsíce a roku
     const filteredVHC = vhcRecords.filter((record) => record[2] === month && record[3] === year);
-    //TODO: Dodělat filtrování detailů
     const uniqueUsers = [...new Set(filteredVHC.map(record => record[5]))]; // Získání unikátních uživatelů
     const VHCDetails = uniqueUsers.map(user => {
       const userRecords = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
       const totalVHC = userRecords.length; // Celkový počet VHC pro uživatele
       const totalVHCWithOffer = userRecords.filter(record => record[4] === "Y").length;
       const totalVHCWithoutOffer = userRecords.filter(record => record[4] === "N").length;
-      const userColor = userColors.find(color => color[0] === user)?.[1]; // Získání barvy uživatele
+      const userColor = userColors.find(color => color[0] === user)?.[1] ?? "#000000" // Získání barvy uživatele, pokud není, použije černou (#000000)
 
       return {
         user,

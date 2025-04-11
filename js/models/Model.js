@@ -40,8 +40,17 @@ export default class Model {
       calendar.month,
       calendar.year
     );
+    const sentVHCWithOffer = this.dataStorage.getSentVHCWithOffer(
+      calendar.month,
+      calendar.year
+    );
+    const sentVHCWithoutOffer = this.dataStorage.getSentVHCWithoutOffer(
+      calendar.month,
+      calendar.year
+    );
+
     //TODO: Ověřit formát vrácených dat a případně upravit
-    return { goal, sentVHC, remainingVHC, VHCDetails };
+    return { goal, sentVHC, remainingVHC, sentVHCWithOffer, sentVHCWithoutOffer, VHCDetails };
   }
 
   //Odeslání nového záznamu o VHC
