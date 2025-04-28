@@ -1,4 +1,8 @@
 import FlashNews from "./components/FlashNews.js";
+import TableVhcDetails from "./components/TableVhcDetails.js";
+//Třída View - zobrazení dat v HTML
+//Tato třída je zodpovědná za vykreslování dat do HTML a interakci s uživatelským rozhraním
+
 export default class View {
   constructor() {
     this.todayLabel = document.getElementById("todayLabel");
@@ -13,6 +17,7 @@ export default class View {
     this.userName = document.getElementById("user");
     this.details = document.getElementById("detailsButton");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
+    this.tableVhcDetails = new TableVhcDetails("vhcDetails"); //Komponenta pro zobrazení detailů o VHC - Tabulka
     this.disableButtons(true); //vypnutí tlačítek
     this.disableUserLink(true); //vypnutí odkazu user
     this.disableDetails(true); //vypnutí zobrazení detailů
@@ -109,6 +114,8 @@ disableDetails(state) {
       this.disableUserLink(false); //zapne odkaz user
   }
   if (data.VHCDetails.length > 0) { //pokud existují detaily VHC, povolí se zobrazení detailů
+    this.tableVhcDetails.setData(data.VHCDetails); //nastaví data do tabulky
+    this.tableVhcDetails.render(); //vykreslí tabulku
     this.disableDetails(false); //povolí zobrazení detailů
   }
   else {
