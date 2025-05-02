@@ -31,7 +31,6 @@ export default class TableVhcDetails {
     const tbody = document.createElement("tbody");
     this.data.map((item) => {
       const row = document.createElement("tr");
-      row.style.color = item.userColor; // Nastavení barvy uživatele
       const userCell = document.createElement("td");
       userCell.textContent = item.user;
       row.appendChild(userCell);
@@ -44,10 +43,13 @@ export default class TableVhcDetails {
       const withoutOfferCell = document.createElement("td");
       withoutOfferCell.textContent = item.totalVHCWithoutOffer;
       row.appendChild(withoutOfferCell);
+      [userCell, totalCell, withOfferCell, withoutOfferCell].forEach(td => { //nastavení barev buněk podle uživatele 
+        td.style.color = item.userColor;
+      });
       tbody.appendChild(row);
     });
     
     thead.appendChild(headerRow);
     this.table.appendChild(tbody);
   }
-}
+};

@@ -53,8 +53,6 @@ export default class DataStorage {
     return Math.max(0, goal - sent); //Zajišťuje, aby výsledek nebyl záporný
   }
 
-  //TODO: Zjisttit počet odelaných VHC s nabídkou
-
   getSentVHCWithOffer(month, year) {
     if (!this.rawData[0] || this.rawData[0].length === 0) return 0; // Ochrana proti chybě
 
@@ -97,14 +95,21 @@ export default class DataStorage {
     const userColors = this.rawData[2].slice(1); // Data o uživatelích a jejich barvách
 
     // Filtrování podle měsíce a roku
-    const filteredVHC = vhcRecords.filter((record) => record[2] === month && record[3] === year);
-    const uniqueUsers = [...new Set(filteredVHC.map(record => record[5]))]; // Získání unikátních uživatelů
-    const VHCDetails = uniqueUsers.map(user => {
-      const userRecords = filteredVHC.filter(record => record[5] === user); // Získání záznamů pro každého uživatele
+    const filteredVHC = vhcRecords.filter(
+      (record) => record[2] === month && record[3] === year
+    );
+    const uniqueUsers = [...new Set(filteredVHC.map((record) => record[5]))]; // Získání unikátních uživatelů
+    const VHCDetails = uniqueUsers.map((user) => {
+      const userRecords = filteredVHC.filter((record) => record[5] === user); // Získání záznamů pro každého uživatele
       const totalVHC = userRecords.length; // Celkový počet VHC pro uživatele
-      const totalVHCWithOffer = userRecords.filter(record => record[4] === "Y").length;
-      const totalVHCWithoutOffer = userRecords.filter(record => record[4] === "N").length;
-      const userColor = userColors.find(color => color[0] === user)?.[1] ?? "#000000" // Získání barvy uživatele, pokud není, použije černou (#000000)
+      const totalVHCWithOffer = userRecords.filter(
+        (record) => record[4] === "Y"
+      ).length;
+      const totalVHCWithoutOffer = userRecords.filter(
+        (record) => record[4] === "N"
+      ).length;
+      const userColor =
+        userColors.find((color) => color[0] === user)?.[1] ?? "#000000"; // Získání barvy uživatele, pokud není, použije černou (#000000)
 
       return {
         user,
@@ -112,11 +117,56 @@ export default class DataStorage {
         totalVHCWithOffer,
         totalVHCWithoutOffer,
         userColor,
-      }
+      };
     });
-    
-    return VHCDetails;
 
+    return VHCDetails;
+  }
+
+  // Získání denních statistik VHC podle uživatele pro daný měsíc a rok
+  // Vracení dat ve formátu { user: 'Miki', color: ..., data: [ { date: 1, count: 2 }, ... ] }
+  getVHCDailyStatsByUser(month, year) {
+    if (!this.rawData[0] || this.rawData[0].length === 0) return [];
+
+    const vhcRecords = this.rawData[0].slice(1);
+
+    // Filtrování podle měsíce a roku
+    const filtered = vhcRecords.filter(
+      (record) => record[2] === month && record[3] === year
+    );
+
+    const userMap = {};
+
+    filtered.forEach((record) => {
+      const day = record[1]; // číslo dne
+      const user = record[5];
+
+      if (!userMap[user]) {
+        userMap[user] = {};
+      }
+
+      if (!userMap[user][day]) {
+        userMap[user][day] = 0;
+      }
+
+      userMap[user][day]++;
+    });
+
+    const userColors = this.rawData[2].slice(1); // uživatelé a jejich barvy
+
+    return Object.entries(userMap).map(([user, dateCounts]) => {
+      const userColor =
+        userColors.find((color) => color[0] === user)?.[1] ?? "#000000";
+
+      return {
+        user,
+        color: userColor,
+        data: Object.entries(dateCounts).map(([day, count]) => ({
+          date: Number(day),
+          count,
+        })),
+      };
+    });
   }
 
   // Přidání - odeslání nového záznamu do datového úložiště

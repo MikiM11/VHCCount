@@ -48,9 +48,14 @@ export default class Model {
       calendar.month,
       calendar.year
     );
+    //Zde se volá metoda pro zobrazení detailů o VHC
+    //TODO: Dodělat volání statistiky odeslaných VHC
+    const VHCDailyStatsByUser = this.dataStorage.getVHCDailyStatsByUser(
+      calendar.month,
+      calendar.year
+    );
 
-    //TODO: Ověřit formát vrácených dat a případně upravit
-    return { goal, sentVHC, remainingVHC, sentVHCWithOffer, sentVHCWithoutOffer, VHCDetails };
+    return { goal, sentVHC, remainingVHC, sentVHCWithOffer, sentVHCWithoutOffer, VHCDetails, VHCDailyStatsByUser };
   }
 
   //Odeslání nového záznamu o VHC

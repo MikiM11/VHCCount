@@ -1,5 +1,6 @@
 import FlashNews from "./components/FlashNews.js";
 import TableVhcDetails from "./components/TableVhcDetails.js";
+import ChartVhcDaily from "./components/ChartVhcDaily.js";
 //Třída View - zobrazení dat v HTML
 //Tato třída je zodpovědná za vykreslování dat do HTML a interakci s uživatelským rozhraním
 
@@ -18,6 +19,7 @@ export default class View {
     this.details = document.getElementById("detailsButton");
     this.flashNews = new FlashNews("flashNews"); //Komponenta pro zobrazování flash zpráv
     this.tableVhcDetails = new TableVhcDetails("vhcDetails"); //Komponenta pro zobrazení detailů o VHC - Tabulka
+    this.ChartVhcDaily = new ChartVhcDaily("vhcChart"); //Komponenta pro zobrazení grafu VHC - Chart
     this.disableButtons(true); //vypnutí tlačítek
     this.disableUserLink(true); //vypnutí odkazu user
     this.disableDetails(true); //vypnutí zobrazení detailů
@@ -113,13 +115,16 @@ disableDetails(state) {
       this.disableButtons(true); //vypne tlačítka
       this.disableUserLink(false); //zapne odkaz user
   }
-  if (data.VHCDetails.length > 0) { //pokud existují detaily VHC, povolí se zobrazení detailů
-    this.tableVhcDetails.setData(data.VHCDetails); //nastaví data do tabulky
-    this.tableVhcDetails.render(); //vykreslí tabulku
-    this.disableDetails(false); //povolí zobrazení detailů
-  }
-  else {
-    this.disableDetails(true); //zakáže zobrazení detailů
+  if (data.VHCDetails.length > 0) {
+    // Tabulka s detaily VHC
+    this.tableVhcDetails.setData(data.VHCDetails);
+    this.tableVhcDetails.render();
+    // Graf s denními statistikami podle uživatelů
+    this.ChartVhcDaily.setData(data.VHCDailyStatsByUser);
+    this.ChartVhcDaily.render();
+    this.disableDetails(false);
+  } else {
+    this.disableDetails(true);
   }
 }
 
