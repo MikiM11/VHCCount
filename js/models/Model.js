@@ -55,7 +55,9 @@ export default class Model {
       calendar.year
     );
 
-    return { goal, sentVHC, remainingVHC, sentVHCWithOffer, sentVHCWithoutOffer, VHCDetails, VHCDailyStatsByUser };
+    const progressInfo = this.getProgressInfo(goal, sentVHC);
+
+    return { goal, sentVHC, remainingVHC, sentVHCWithOffer, sentVHCWithoutOffer, VHCDetails, VHCDailyStatsByUser, progressInfo };
   }
 
   //Odeslání nového záznamu o VHC
@@ -70,5 +72,27 @@ export default class Model {
       user: user
     };
     await this.dataStorage.sendVHC(data);
+  }
+
+  getProgressInfo(goal, sentVHC) {
+    const calendar = new CalendarCalculator();
+    const today = calendar.date;
+    const daysInMonth = new Date(calendar.year, calendar.month, 0).getDate();
+
+    if (goal > 0) {
+      const expected = (today / daysInMonth) * goal;
+      const diff = sentVHC - expected;
+      const percent = Math.round((sentVHC / expected) * 100);
+
+      return {
+        expected: Math.round(expected),
+        actual: sentVHC,
+        diff: Math.round(diff),
+        percent,
+        projected: Math.round((sentVHC / today) * daysInMonth)
+      };
+    }
+
+    return null;
   }
 }

@@ -123,6 +123,30 @@ disableDetails(state) {
     this.ChartVhcDaily.setData(data.VHCDailyStatsByUser);
     this.ChartVhcDaily.render();
     this.disableDetails(false);
+    // Zobrazení informací o progresu do #vhcChartInfo
+    const info = document.getElementById("vhcChartInfo"); // Získání elementu pro zobrazení informací o progresu
+    info.classList.remove("text-success", "text-danger", "text-muted"); // Odstranění předchozích tříd pro barvu textu
+
+    if (data.progressInfo) {
+      // Pokud jsou k dispozici informace o progresu
+      const { expected, actual, diff, percent, projected } = data.progressInfo; // Destrukturalizace dat o progresu
+
+      // Určení trendu na základě rozdílu mezi očekávaným a skutečným počtem VHC
+      const trend =
+        diff >= 0
+          ? `Jste nad plánem o ${diff} VHC (+${percent - 100}\u202F%).` // Pokud je rozdíl kladný, uživatel je nad plánem
+          : `Jste ${Math.abs(diff)} VHC pod plánem (\u2212${100 - percent}\u202F%).`; // Pokud je rozdíl záporný, uživatel je pod plánem
+
+      // Nastavení textu s informacemi o progresu
+      info.innerText = `K dnešnímu dni byste měli mít ${expected} VHC. ${trend} Pokud bude tempo stejné, do konce měsíce odešlete přibližně ${projected} VHC.`;
+
+      // Přidání třídy pro barvu textu na základě trendu (zelená pro nad plánem, červená pro pod plánem)
+      info.classList.add(diff >= 0 ? "text-success" : "text-danger");
+    } else {
+      // Pokud nejsou k dispozici informace o progresu
+      info.innerText = "Cíl pro tento měsíc není nastaven."; // Zobrazení výchozí zprávy
+      info.classList.add("text-muted"); // Nastavení neutrální barvy textu
+    }
   } else {
     this.disableDetails(true);
   }
