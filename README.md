@@ -67,5 +67,7 @@ Digitální verze s přehledem, statistikami a predikcí:
 
 ---
 
+## 📄 Licence
+
 Projekt je otevřený pro studijní a demonstrační účely.  
-Autor: [Tvé jméno nebo přezdívka]
+Autor: [Miki Gerlašinský]
