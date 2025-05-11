@@ -1,0 +1,6 @@
+# Systémové soubory macOS
+.DS_Store
+
+# VS Code pracovní soubory
+.vscode/
+*.code-workspace
