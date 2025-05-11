@@ -32,8 +32,6 @@ Umožňuje zaznamenat, zda byla kontrola s nabídkou nebo bez ní, a porovnávat
 
 Frontend aplikace je statický (HTML, CSS, JS), ale **komunikuje s externím backendem přes Google Apps Script**, který pracuje s Google Sheets jako úložištěm.
 
-Aplikace je navržena podle architektury **MVC (Model–View–Controller)**, která odděluje logiku, zobrazení a komunikaci s daty.
-
 Z důvodu CORS omezení **je nutné aplikaci spouštět přes lokální server**, například:
 
 - Live Server ve Visual Studio Code
