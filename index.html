@@ -1,138 +1,99 @@
 <!DOCTYPE html>
 <html lang="cs">
-  <head>
-    <!-- Meta informace o stránce -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="Miki Gerlašinský" />
-    <meta
-      name="description"
-      content="Aplikace pro počítání odeslaných VHC s cílem a statistikami."
-    />
-    <!-- CSS soubory Bootstrapu a ikon -->
-    <link rel="stylesheet" href="css/bootstrap.css" />
-    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
-    <!-- Favicony pro různé platformy -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="img/favicon/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="img/favicon/favicon-32x32.png"
-    />
-    <!-- Název stránky -->
-    <title>VHC - počet</title>
-  </head>
 
-  <body class="d-flex flex-column min-vh-100">
-    <!-- Hlavní obsah stránky -->
-    <div class="container">
-      <!-- Hlavička stránky -->
-      <header class="row p-3 d-flex">
-        <!-- Prostor pro zprávy -->
-        <div
-          class="position-fixed top-10 start-50 translate-middle-x w-75 z-3"
-          id="flashNews"
-        ></div>
+<head>
+  <!-- Meta informace o stránce -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Miki Gerlašinský" />
+  <meta name="description" content="Aplikace pro počítání odeslaných VHC s cílem a statistikami." />
+  <!-- CSS soubory Bootstrapu a ikon -->
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+  <!-- Favicony pro různé platformy -->
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png" />
+  <!-- Název stránky -->
+  <title>VHC - počet</title>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+  <!-- Hlavní obsah stránky -->
+  <div class="container">
+    <!-- Hlavička stránky -->
+    <header class="row p-3 d-flex">
+      <!-- Prostor pro zprávy -->
+      <div class="position-fixed top-10 start-50 translate-middle-x w-75 z-3" id="flashNews"></div>
+      <div class="col">
+        <h4>Spočítej to... VHC</h4>
+        <!-- Zobrazení aktuálního data a zbývajících dní do konce měsíce a spinner -->
+        <div class="text-body-secondary">
+          Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá
+          <span id="remainingDays">-</span> dní.
+          <span id="spinner" class="spinner-border spinner-border-sm text-primary" role="status"
+            style="visibility: hidden"></span>
+        </div>
+      </div>
+      <div class="col text-end">
+        <img src="img/logo.jpeg" alt="Logo Ford" width="100" />
+        <div class="text-body-secondary">
+          Zapisuje: <a id="user" href="#">nikdo</a>
+        </div>
+      </div>
+      <hr class="mt-2" />
+    </header>
+
+    <!-- Hlavní data aplikace -->
+    <div class="container border rounded p-3">
+      <div class="row"></div>
+      <div class="row">
         <div class="col">
-          <h4>Spočítej to... VHC</h4>
-          <!-- Zobrazení aktuálního data a zbývajících dní do konce měsíce a spinner -->
-          <div class="text-body-secondary">
-            Dnes je <span id="todayLabel">-</span>. Do konce měsíce zbývá
-            <span id="remainingDays">-</span> dní.
-            <span
-              id="spinner"
-              class="spinner-border spinner-border-sm text-primary"
-              role="status"
-              style="visibility: hidden"
-            ></span>
+          <div class="h6">Cíl <span id="month"></span></div>
+          <div class="h1" id="goal">-</div>
+        </div>
+
+        <div class="col">
+          <div class="h6">Odeslaná VHC</div>
+          <div class="h1" id="sentVHC">-</div>
+          <div>
+            <!-- Tlačítko pro VHC s nabídkou -->
+            <button id="btnWithOffer" type="button" class="btn btn-success" title="s nabídkou">
+              S nabídkou <i class="bi bi-clipboard-check pe-1"></i>
+            </button>
+            <!-- Tlačítko pro VHC bez nabídky -->
+            <button id="btnWithoutOffer" type="button" class="btn btn-warning" title="bez nabídky">
+              Bez nabídky <i class="bi bi-clipboard pe-1"></i>
+            </button>
           </div>
         </div>
-        <div class="col text-end">
-          <img src="img/logo.jpeg" alt="Logo Ford" width="100" />
-          <div class="text-body-secondary">
-            Zapisuje: <a id="user" href="#">nikdo</a>
-          </div>
+
+        <div class="col">
+          <div class="h6">Zbývá odeslat</div>
+          <div class="h1" id="remainingVHC">-</div>
         </div>
-        <hr class="mt-2" />
-      </header>
-
-      <!-- Hlavní data aplikace -->
-      <div class="container border rounded p-3">
-        <div class="row"></div>
-        <div class="row">
-          <div class="col">
-            <div class="h6">Cíl <span id="month"></span></div>
-            <div class="h1" id="goal">-</div>
-          </div>
-
-          <div class="col">
-            <div class="h6">Odeslaná VHC</div>
-            <div class="h1" id="sentVHC">-</div>
-            <div>
-              <!-- Tlačítko pro VHC s nabídkou -->
-              <button
-                id="btnWithOffer"
-                type="button"
-                class="btn btn-success"
-                title="s nabídkou"
-              >
-                S nabídkou <i class="bi bi-clipboard-check pe-1"></i>
+      </div>
+      <div class="row mt-3">
+        <!-- Rozbalovací sekce pro zobrazení detailních informací -->
+        <div class="accordion" id="accordionDetails">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed pt-1 pb-1" id="detailsButton" type="button"
+                data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                aria-controls="collapseOne">
+                Detaily
               </button>
-              <!-- Tlačítko pro VHC bez nabídky -->
-              <button
-                id="btnWithoutOffer"
-                type="button"
-                class="btn btn-warning"
-                title="bez nabídky"
-              >
-                Bez nabídky <i class="bi bi-clipboard pe-1"></i>
-              </button>
-            </div>
-          </div>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionDetails">
+              <div class="accordion-body">
+                <!-- Tabulka pro zobrazení detailních informací -->
+                <div id="vhcDetails"></div>
+                <!--Predikce -->
+                <div id="vhcChartInfo"></div>
 
-          <div class="col">
-            <div class="h6">Zbývá odeslat</div>
-            <div class="h1" id="remainingVHC">-</div>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <!-- Rozbalovací sekce pro zobrazení detailních informací -->
-          <div class="accordion" id="accordionDetails">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button
-                  class="accordion-button collapsed pt-1 pb-1"
-                  id="detailsButton"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  Detaily
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                class="accordion-collapse collapse"
-                data-bs-parent="#accordionDetails"
-              >
-                <div class="accordion-body">
-                  <!-- Tabulka pro zobrazení detailních informací -->
-                  <div id="vhcDetails"></div>
-                  <!--Predikce -->
-                   <div id="vhcChartInfo"></div>
-
-                  <!-- Graf -->
-                  <div class="mt-4">
-                      <canvas id="vhcChart"></canvas>
-                    </div>
-                  </div>
+                <!-- Graf -->
+                <div class="mt-4">
+                  <canvas id="vhcChart"></canvas>
                 </div>
               </div>
             </div>
@@ -140,16 +101,19 @@
         </div>
       </div>
     </div>
+  </div>
+  </div>
 
-    <!-- Footer stránky - umístěn na spodní straně -->
-    <footer class="text-center fw-lighter p-2 mt-auto">
-      <small class="border-top">v1.0 miki© 2024 - 2025</small>
-    </footer>
+  <!-- Footer stránky - umístěn na spodní straně -->
+  <footer class="text-center fw-lighter p-2 mt-auto">
+    <small class="border-top">v1.0 miki© 2024 - 2025</small>
+  </footer>
 
-    <!-- JavaScript soubory -->
-    <script src="css/js/bootstrap.bundle.min.js"></script>
-    <script src="js/libs/chart.umd.js"></script>
-    <script src="js/libs/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script type="module" src="js/controller.js"></script>
-  </body>
+  <!-- JavaScript soubory -->
+  <script src="css/js/bootstrap.bundle.min.js"></script>
+  <script src="js/libs/chart.umd.js"></script>
+  <script src="js/libs/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script type="module" src="js/controller.js"></script>
+</body>
+
 </html>

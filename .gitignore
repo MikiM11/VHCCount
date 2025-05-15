@@ -4,3 +4,4 @@
 # VS Code pracovní soubory
 .vscode/
 *.code-workspace
+img/.DS_Store
