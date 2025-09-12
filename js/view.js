@@ -153,7 +153,7 @@ disableDetails(state) {
 }
 
   //Metoda pro zobrazení flash zprávy
-  showFlashMessage(message, type = "info", timeout = 5000) {
+  showFlashMessage(message, type = "info", timeout = 3000) {
     this.flashNews.showMessage(message, type, timeout);
   }
 }
