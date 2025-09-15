@@ -23,14 +23,14 @@ export default class View {
     this.disableButtons(true); //vypnutí tlačítek
     this.disableUserLink(true); //vypnutí odkazu user
     this.disableDetails(true); //vypnutí zobrazení detailů
-    this.vhcData = {};  //Objekt pro ukládání dat localStorage
+    this.vhcData = {}; //Objekt pro ukládání dat localStorage
     this.selectUser(); //Metoda pro výběr uživatele po kliknutí na odkaz user
   }
 
   //Metoda pro uložení uživatele do localStorage
   saveUserToLocalStorage(user) {
-    this.vhcData = {user: user};  //Uložení uživatele do objektu 
-    localStorage.setItem("VHCData",JSON.stringify(this.vhcData)); //Uložení objektu do localStorage
+    this.vhcData = { user: user }; //Uložení uživatele do objektu
+    localStorage.setItem("VHCData", JSON.stringify(this.vhcData)); //Uložení objektu do localStorage
   }
 
   //Metoda pro načtení uživatele z localStorage
@@ -42,22 +42,22 @@ export default class View {
     }
     return null;
   }
-  
+
   //Metoda pro zapnutí / vypnutí tlačítek
   disableButtons(state) {
     this.btnWithOffer.disabled = state;
     this.btnWithoutOffer.disabled = state;
-}
+  }
 
-//Metoda pro znepřístupnění odkazu - linku ID=user
-disableUserLink(state) {
-  this.userName.style.pointerEvents = state ? "none" : "auto";
-  this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
-}
+  //Metoda pro znepřístupnění odkazu - linku ID=user
+  disableUserLink(state) {
+    this.userName.style.pointerEvents = state ? "none" : "auto";
+    this.userName.style.opacity = state ? "0.5" : "1"; // Vizuální zeslabení odkazu
+  }
 
-disableDetails(state) {
-  this.details.disabled = state;
-}
+  disableDetails(state) {
+    this.details.disabled = state;
+  }
 
   // Metoda pro nastavení události tlačítka pro odeslání VHC s nabídkou
   setSendVHCWithOffer(handler) {
@@ -74,9 +74,9 @@ disableDetails(state) {
       this.spinner.style.visibility = "visible";
       this.disableButtons(true);
       this.disableUserLink(true);
-      handler("N", this.userName.innerText); //N je No, tedy bez nabídky, this.userName.innerText je jméno uživatele  
+      handler("N", this.userName.innerText); //N je No, tedy bez nabídky, this.userName.innerText je jméno uživatele
     });
-  };
+  }
 
   //Metoda pro výběr a změnu uživatele po kliknití na odkaz user
   selectUser() {
@@ -110,50 +110,51 @@ disableDetails(state) {
       this.userName.innerText = this.loadUserFromLocalStorage();
       this.disableButtons(false); //zapne tlačítka
       this.disableUserLink(false); //zapne odkaz user
-    }
-    else {
+    } else {
       this.disableButtons(true); //vypne tlačítka
       this.disableUserLink(false); //zapne odkaz user
-  }
-  if (data.VHCDetails.length > 0) {
-    // Tabulka s detaily VHC
-    this.tableVhcDetails.setData(data.VHCDetails);
-    this.tableVhcDetails.render();
-    // Graf s denními statistikami podle uživatelů
-    this.ChartVhcDaily.setData(data.VHCDailyStatsByUser);
-    this.ChartVhcDaily.render();
-    this.disableDetails(false);
-    // Zobrazení informací o progresu do #vhcChartInfo
-    const info = document.getElementById("vhcChartInfo"); // Získání elementu pro zobrazení informací o progresu
-    info.classList.remove("text-success", "text-danger", "text-muted"); // Odstranění předchozích tříd pro barvu textu
-
-    if (data.progressInfo) {
-      // Pokud jsou k dispozici informace o progresu
-      const { expected, actual, diff, percent, projected } = data.progressInfo; // Destrukturalizace dat o progresu
-
-      // Určení trendu na základě rozdílu mezi očekávaným a skutečným počtem VHC
-      const trend =
-        diff >= 0
-          ? `Jste nad plánem o ${diff} VHC (+${percent - 100}\u202F%).` // Pokud je rozdíl kladný, uživatel je nad plánem
-          : `Jste ${Math.abs(diff)} VHC pod plánem (\u2212${100 - percent}\u202F%).`; // Pokud je rozdíl záporný, uživatel je pod plánem
-
-      // Nastavení textu s informacemi o progresu
-      info.innerText = `K dnešnímu dni byste měli mít ${expected} VHC. ${trend} Pokud bude tempo stejné, do konce měsíce odešlete přibližně ${projected} VHC.`;
-
-      // Přidání třídy pro barvu textu na základě trendu (zelená pro nad plánem, červená pro pod plánem)
-      info.classList.add(diff >= 0 ? "text-success" : "text-danger");
-    } else {
-      // Pokud nejsou k dispozici informace o progresu
-      info.innerText = "Cíl pro tento měsíc není nastaven."; // Zobrazení výchozí zprávy
-      info.classList.add("text-muted"); // Nastavení neutrální barvy textu
     }
-  } else {
-    this.disableDetails(true);
+    if (data.VHCDetails.length > 0) {
+      // Tabulka s detaily VHC
+      this.tableVhcDetails.setData(data.VHCDetails);
+      this.tableVhcDetails.render();
+      // Graf s denními statistikami podle uživatelů
+      this.ChartVhcDaily.setData(data.VHCDailyStatsByUser);
+      this.ChartVhcDaily.render();
+      this.disableDetails(false);
+      // Zobrazení informací o progresu do #vhcChartInfo
+      const info = document.getElementById("vhcChartInfo"); // Získání elementu pro zobrazení informací o progresu
+      info.classList.remove("text-success", "text-danger", "text-muted"); // Odstranění předchozích tříd pro barvu textu
+
+      if (data.progressInfo) {
+        // Pokud jsou k dispozici informace o progresu
+        const { expected, diff, percent, projected } = data.progressInfo; // Destrukturalizace dat o progresu
+
+        // Určení trendu na základě rozdílu mezi očekávaným a skutečným počtem VHC
+        const trend =
+          diff >= 0
+            ? `Jste nad plánem o ${diff} VHC (+${percent - 100}\u202F%).` // Pokud je rozdíl kladný, uživatel je nad plánem
+            : `Jste ${Math.abs(diff)} VHC pod plánem (\u2212${
+                100 - percent
+              }\u202F%).`; // Pokud je rozdíl záporný, uživatel je pod plánem
+
+        // Nastavení textu s informacemi o progresu
+        info.innerText = `K dnešnímu dni byste měli mít ${expected} VHC. ${trend} Pokud bude tempo stejné, do konce měsíce odešlete přibližně ${projected} VHC.`;
+
+        // Přidání třídy pro barvu textu na základě trendu (zelená pro nad plánem, červená pro pod plánem)
+        info.classList.add(diff >= 0 ? "text-success" : "text-danger");
+      } else {
+        // Pokud nejsou k dispozici informace o progresu
+        info.innerText = "Cíl pro tento měsíc není nastaven."; // Zobrazení výchozí zprávy
+        info.classList.add("text-muted"); // Nastavení neutrální barvy textu
+      }
+    } else {
+      this.disableDetails(true);
+    }
   }
-}
 
   //Metoda pro zobrazení flash zprávy
-  showFlashMessage(message, type = "info", timeout = 5000) {
+  showFlashMessage(message, type = "info", timeout) {
     this.flashNews.showMessage(message, type, timeout);
   }
 }
